@@ -1,0 +1,42 @@
+﻿<Window x:Class="ClassroomTimerApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        
+        Title="Classroom Timer"
+        Icon="wall-clock.ico"
+        Loaded="Window_Loaded"
+        WindowStartupLocation="Manual"
+        WindowStyle="None"
+        Topmost="True"
+        AllowsTransparency="True"
+        Background="Black"
+        Opacity="0.6"
+        Height="180"
+        Width="180">
+    <Grid>
+        <Canvas x:Name="TemplateCanvas"
+                Visibility="Collapsed"
+                Margin="10">
+            <Ellipse Width="20"
+                     Height="20"
+                     Stretch="Fill"
+                     Fill="White"
+                     Opacity="0.5" />
+        </Canvas>
+
+        <Canvas x:Name="WindowCanvas" />
+        <TextBlock x:Name="TextCurrentStesp"
+                   FontSize="80"
+                   Foreground="White"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Top"
+                   Margin="25" />
+        <TextBlock x:Name="TextStepDescription"
+                   FontSize="25"
+                   FontWeight="Bold"
+                   Foreground="White"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Bottom"
+                   Margin="35" />
+    </Grid>
+</Window>

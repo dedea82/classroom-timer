@@ -5,6 +5,7 @@
         Title="Classroom Timer"
         Icon="wall-clock.ico"
         Loaded="Window_Loaded"
+        MouseDoubleClick="Window_MouseDoubleClick"
         WindowStartupLocation="Manual"
         WindowStyle="None"
         Topmost="True"

@@ -21,25 +21,25 @@ namespace ClassroomTimerApp
         readonly double TotalDots;
         readonly ClassroomTimer[] ClassroomTimers;
 
-
-
         public MainWindow()
         {
             InitializeComponent();
             IConfiguration Config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
 
-            Timer = new DispatcherTimer();
-            Timer.Interval = TimeSpan.FromSeconds(Config.GetValue<int>("ClassroomTimer:RefreshSeconds"));
+            Timer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromSeconds(Config.GetValue<int>("ClassroomTimer:RefreshSeconds"))
+            };
             Timer.Tick += Timer_Tick;
 
             TotalDots = Config.GetValue<double>("ClassroomTimer:Dots");
-            ClassroomTimers = Config.GetSection("ClassroomTimer:Timers").GetChildren()
+            ClassroomTimers = [.. Config.GetSection("ClassroomTimer:Timers").GetChildren()
                 .Select(p => new ClassroomTimer
                 {
                     Description = p.GetValue<string>("Description"),
                     StartTime = DateTime.Now.Date.Add(TimeSpan.Parse(p.GetValue<string?>("StartTime") ?? "")),
                     EndTime = DateTime.Now.Date.Add(TimeSpan.Parse(p.GetValue<string?>("EndTime") ?? ""))
-                }).ToArray();
+                })];
         }
 
         private void UI_Refresh()
@@ -80,7 +80,6 @@ namespace ClassroomTimerApp
             TextCurrentStesp.Text = ((int)(steps - currentStep)).ToString();
             TextStepDescription.Text = description;
         }
-
         private void UI_Clear()
         {
             WindowCanvas.Children.Clear();
@@ -96,8 +95,17 @@ namespace ClassroomTimerApp
             this.Top = workingArea.Bottom - this.Height;
             this.Timer.Start();
             UI_Refresh();
-
-
         }
+        private void Window_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (this.Left == 0)
+            {
+                var workingArea = System.Windows.SystemParameters.WorkArea;
+                this.Left = workingArea.Right - this.Width;
+            }
+            else this.Left = 0;
+        }
+
+
     }
 }
